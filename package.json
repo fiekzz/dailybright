@@ -9,6 +9,7 @@
     "dotenv": "^16.0.1",
     "fs": "^0.0.1-security",
     "he": "^1.2.0",
+    "http": "^0.0.1-security",
     "node-html-parser": "^5.3.3",
     "node-telegram-bot-api": "^0.58.0"
   },

@@ -4,6 +4,7 @@ import { parse } from 'node-html-parser';
 import axios from "axios";
 import TelegramBot from 'node-telegram-bot-api';
 import he from 'he';
+import http from 'http';
 
 config()
 
@@ -35,6 +36,25 @@ const Parser = (res) => {
 
 }
 const MAX_CHAR = 4096
+
+process
+  .on('SIGTERM', shutdown('SIGTERM'))
+  .on('SIGINT', shutdown('SIGINT'))
+  .on('uncaughtException', shutdown('uncaughtException'));
+
+setInterval(console.log.bind(console, 'tick'), 1000);
+http.createServer((req, res) => res.end('hi')).listen(process.env.PORT || 3000, console.log('Listening'));
+
+function shutdown(signal) {
+  return (err) => {
+    console.log(`${ signal }...`);
+    if (err) console.error(err.stack || err);
+    setTimeout(() => {
+      console.log('...waited 5s, exiting.');
+      process.exit(err ? 1 : 0);
+    }, 5000).unref();
+  };
+}
 
 Bot.on('message', (msg) => {
 
